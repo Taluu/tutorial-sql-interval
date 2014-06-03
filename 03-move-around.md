@@ -172,7 +172,7 @@ INSERT INTO tuto_ri (node_depth, node_left, node_right)
 +------+--------------+-------------+--------------+ 
 | `id` | `node_level` | `node_left` | `node_right` |
 +------+--------------+-------------+--------------+
-| 1    | 0            | 1           | 20           |
+| 1    | 0            | 1           | 38           |
 +------+--------------+-------------+--------------+
 | 2    | 1            | 2           | 7            |
 +------+--------------+-------------+--------------+
@@ -250,22 +250,154 @@ exercices.
 
 Déplacement d'un nœud
 =====================
+Comme je vous le disais, le déplacement d'un nœud se résume basiquement à deux actions : la "suppression" d'un nœud,
+et sa "réinsertion".
 
-<!---
-[[ NOTE ALGOS ]]
-Déplacement de noeud :
+Mais comme un bon exemple vaut mieux qu'un long discours, tachons par exemple de déplacer le nœud n°7, et mettons le 
+à l'extrémité du nœud n°2. J'ai volontairement omis les bornes de ces deux nœuds, pour nous mettre dans un cas où nous
+ne les connaissons pas. Profitons-en pour également connaître le nombre d'enfants que nous déplaçons.
 
-1) Retrait de la borne droite de l'enfant à déplacer à ses deux bornes (mise en zone temporaire, négative)
-    condition : bornes >= bg de l'enfant, <= bd de l'enfant
+```sql
+SELECT node_left, node_right
+    FROM tuto_ri
+    WHERE id IN (2, 7);
+```
 
-2) Retrait du nombre d'éléments à déplacer * 2 (rebouche du trou)
-    condition : bornes > bg de l'enfant
+ `id` | `node_left` | `node_right`
+ ---- | ----------- | -------------
+    2 | 2           | 7
+    7 | 12          | 17
 
-3) Ajout du nombre d'éléments à déplacer * 2 (création d'un nouveau trou)
-   condition complexe : plusieurs cas possibles...
-     - Si on souhaite placer le nœud avec un voisin à gauche, alors éléments ayant une borne > bd du voisin
-     - Si il n'y a pas de voisins, alors tous les éléments ayant une borne > bg du parent
+```sql
+SELECT COUNT(*)
+    FROM tuto_ri
+    WHERE node_left >= 12
+        AND node_right <= 17;
+```
 
-4) Ajout de la bd de l'enfant à gauche (ou bg du parent) + nombre d'éléments * 2 aux bornes de l'enfant à déplacer
-  condition : bornes <= 0
--->
+| `COUNT(*)` |
+| ---------- |
+| 3          |
+
+Je parlais de suppression, et maintenant qu'on a toutes les informations à notre disposition, on va donc pouvoir
+"supprimer" le nœud que nous souhaitons déplacer... Attention, notez bien les guillemets autour de l'emploi du mot
+supprimer ! En effet, nous n'allons pas le supprimer de la base de donnée, nous allons juste nous contenter de le cacher
+dans notre arbre. On appelle ça une **zone temporaire**.
+
+Pour déplacer un arbre en zone temporaire, il existe deux façons ; soit on met les bornes de notre arbre en négatif,
+soit en un nombre faramineusement grand. Par préférence, je préfère nettement la première solution ; il est en effet
+difficile de prévoir la taille de notre arbre, ou de celui de destination. Alors que si nous nous contentons de mettre
+le nœud déplacé en zone négative, notre arbre peut alors continuer de grossir sans poser trop de problèmes.
+
+Pour cela, il suffit de *retrancher* la borne droite du nœud à déplacer à *toutes* ses bornes (gauche comme droite) ;
+
+```sql
+UPDATE tuto_ri
+    SET node_left = node_left - 17, node_right = node_right - 17
+    WHERE node_left >= 12 AND node_right <= 17;
+```
+
+Mais maintenant qu'on a "supprimé" notre nœud, et comme nous l'avons vu dans le point précédent, il nous faut alors
+reboucher le trou ;
+
+```sql
+UPDATE tuto_ri
+    SET node_left = node_left - 3 * 2
+    WHERE node_left > 12;
+
+UPDATE tuto_ri
+    SET node_right = node_right - 3 * 2
+    WHERE node_right > 17;
+```
+
+Maintenant que notre nœud est en zone temporaire, il nous faut dès à présent ouvrir un trou où nous le souhaitons, soit
+*à l'extrémité du nœud ayant pour bornes (2, 7)*. Il s'agit du cas que nous avons déjà vu dans la sous-partie
+précédente ; nous nous occuperons de voir l'autre cas par la suite.
+
+```sql
+UPDATE tuto_ri
+    SET node_right = node_right + 3 * 2
+    WHERE node_right >= 7
+
+UPDATE tuto_ri
+    SET node_left = node_left + 3 * 2
+    WHERE node_left >= 7;
+```
+
+Le trou est ouvert ; il ne nous reste plus qu'a réinsérer notre nœud à l'endroit qui convient. Pour cela, plutôt que de
+faire comme nous avions fait précédemment (soit une bête insertion), il faut juste manipuler les bornes du nœud à
+déplacer, en leur ajoutant l'ancienne valeur de la borne droite du nouveau parent, le nombre d'éléments dans le nœud
+à déplacer, et à multiplier le tout par deux pour avoir une différence de bornes consistante.
+
+```sql
+UPDATE tuto_ri
+    SET node_right = node_right + 7 + 3 * 2
+    WHERE node_right <= 0;
+
+UPDATE tuto_ri
+    SET node_left = node_left + 7 + 3 * 2
+    WHERE node_left <= 0;
+```
+
+Félicitations, vous avez réussi à déplacer le nœud n°7 dans le nœud n°2.
+
+Au fil de cette explication, Je vous ai parlé de cas un peu spéciaux, qui sont en fait vrai pour l'insertion comme pour
+le déplacement de nœud ; on a en effet abordé que le cas où nous souhaitions juste insérer notre nœud en tant que
+_**dernier** enfant du nœud d'accueil_. Et maintenant que nous avons vu le déplacement en détail, nous pouvons ainsi
+voir que les cas suivants existent :
+
+- Nous souhaitons insérer le nœud **avant** les autres enfants du nœud d'accueil
+- Nous souhaitons insérer le nœud **après** un enfant bien particulier du nœud d'accueil
+- Nous souhaitons insérer le nœud **après** le dernier enfant du nœud d'accueil (s'il en a)
+
+Nous avons déjà traité le troisième cas ; attardons-nous sur les deux premiers cas. En fait, ils ne sont pas si
+compliqués que ça ; il y a juste quelques paramètres qui changent. Autant la mise en "zone temporaire" et le rebouchage
+qui suit ne change pas, mais observons le moment où nous créons un trou et le moment où on insère effectivement notre
+nœud dans le nœud d'accueil.
+
+Dans le premier cas (nous souhaitons alors insérer notre nœud **avant** ses frères), plutôt que de se baser sur la
+borne *droite* du parent, basons nous plutôt sur sa borne *gauche*. Nos requêtes deviennent donc les suivantes :
+
+```sql
+UPDATE tuto_ri
+    SET node_right = node_right + 3 * 2
+    WHERE node_right > 2;
+
+UPDATE tuto_ri
+    SET node_left = node_left + 3 * 2
+    WHERE node_left > 2;
+
+UPDATE tuto_ri
+    SET node_right = node_right + 2 + 3 * 2
+    WHERE node_right <= 0;
+
+UPDATE tuto_ri
+    SET node_left = node_left + 2 + 3 * 2
+    WHERE node_left <= 0;
+```
+
+Pour le second cas (nous souhaitons alors insérer notre nœud **après** un de ses frères), plutôt que de se baser sur la
+borne droite du *parent*, nous alors nous focaliser sur la borne droite du *frère*. Mettons que nous souhaitons déplacer
+le nœud n°7 **après** le nœud n°3. Une sélection des bornes de ce nœud nous indique alors que ses bornes ont pour
+valeur le tuple (3, 4).
+
+```sql
+UPDATE tuto_ri
+    SET node_right = node_right + 3 * 2
+    WHERE node_right > 4;
+
+UPDATE tuto_ri
+    SET node_left = node_left + 3 * 2
+    WHERE node_left > 4;
+
+UPDATE tuto_ri
+    SET node_right = node_right + 4 + 3 * 2
+    WHERE node_right <= 0;
+
+UPDATE tuto_ri
+    SET node_left = node_left + 4 + 3 * 2
+    WHERE node_left <= 0;
+```
+
+Félicitations, vous avez maintenant vu comment déplacer et insérer un nœud à n'importe quel endroit de votre arbre !
+
