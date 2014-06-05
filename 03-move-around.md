@@ -124,7 +124,7 @@ On va donc rattacher cet arbre à la feuille ayant l'id n°5, ayant donc – en 
 feuille rajoutée lors de l'exercice précédent – les bornes 8 et 9. Avant de commencer, rendons l'arbre à insérer
 compatible avec le nœud d'accueil. Pour cela, il nous faut ajouter la borne droite du nœud d'accueil, auquel on
 retranche un (en effet, la borne gauche du premier élément de l'arbre à insérer commence à 1 et pas 0 !). Soit ici 
-\\( 9 - 1 = 8 \\).
+$9 - 1 = 8$.
 
 Occupons-nous maintenant de provoquer un trou dans l'arbre d'accueil. Souvenez-vous du calcul du nombre d'enfants que
 nous avions abordé dans la partie théorique : 
@@ -135,7 +135,7 @@ nous avions abordé dans la partie théorique :
                                                                 & = & \boxed{8} \times 2  + 1
 \end{array}\\)
 
-Si on compte l'élément racine, ça nous fait donc : \\( 8 + 1 = \bf{9}\\) éléments) ; il faudra donc ajouter **18** aux
+Si on compte l'élément racine, ça nous fait donc : $8 + 1 = \bf{9}$ éléments) ; il faudra donc ajouter **18** aux
 bornes gauche et droite des éléments ayant une borne supérieure ou égale à 9. Vous pouvez maintenant faire le
 rapprochement avec l'ajout d'une feuille : nous ajoutions 2 aux bornes à modifier, car il y avait un élément à insérer. 
 

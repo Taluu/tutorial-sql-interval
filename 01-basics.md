@@ -6,15 +6,14 @@ Avant d'attaquer la bête, nous avons, tout d'abord, besoin de la définir. Tout
 
 La représentation intervallaire !
 
-Je commence par un point optionnel, ce sera plus facile à expliquer. Cette technique peut permettre de situer un 
-élément dans une hiérarchie. Pour donner une image de cette notion de hiérarchie, prenons l'exemple d'un système de
-forums.
+Cette technique peut permettre de situer un  élément dans une **hiérarchie**. Pour donner une image de cette notion de
+hiérarchie, prenons l'exemple d'un système de forums.
 
-Un tel système peut proposer \\( [1,\infty[ \\) catégories, elles-même composées de \\( [1,\infty[ \\) forums,
-eux-mêmes pouvant être composés de \\( [0,\infty[ \\) sous-forums, etc. Voilà ce qu'est la notion de hiérarchie : si je
-suis dans un sous-forum, qui lui est donc dans un forum, lui-même dans une catégorie, ça veut dire que je suis à la
-troisième hiérarchie. Il peut, bien entendu, y avoir plusieurs éléments ayant le même niveau, comme, toujours à l'image
-d'un système de forums, plusieurs forums affiliés à une catégorie.
+Un tel système peut proposer $[1,\infty[$ catégories, elles-même composées de $[0,\infty[$ forums, eux-mêmes pouvant 
+être composés de $[0,\infty[$ sous-forums. Voilà ce qu'est la notion de hiérarchie : si je suis dans un sous-forum, qui
+lui est donc dans un forum, lui-même dans une catégorie, ça veut dire que je suis à la troisième hiérarchie. Il peut,
+bien entendu, y avoir plusieurs éléments ayant le même niveau, comme, toujours à l'image d'un système de forums,
+plusieurs forums affiliés à une catégorie.
 
 Un point essentiel – si ce n'est le plus important ! – à retenir dans la représentation intervallaire (je ne vois pas
 ce qu'il y a de compliqué à retenir là-dedans, ce n'est quand même pas de l'acide acétyli... acide acytéli... bref, un
