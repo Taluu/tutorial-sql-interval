@@ -38,22 +38,22 @@ gauche**. Si le résultat est égal à 1, il s'agit d'une feuille, sinon d'un n�
 un peu plus loin : cette différence nous donne le double nombre d'enfants de ce nœud auquel on lui rajoute un. Vérifions
 le pour une feuille (disons le nœud  ayant les bornes 3 et 4)  : 
 
-\\( \begin{array} {lcl}
+$$ \begin{array} {lcl}
     \text{borne droite} - \text{borne gauche} & = & 4 - 3 \\\ 
                                               & = & 1     \\\ 
                                               & = & 0 + 1 \\\ 
                                               & = & \boxed{0} \times 2  + 1
-\end{array} \\)
+\end{array}$$
 
 Le nœud aux bornes 3 et 4 est donc une feuille, et ne comporte donc aucun élément fils. Vérifions le également pour un
 des nœuds du premier niveau du schéma, celui ayant les bornes 2 et 7 : 
 
-\\( \begin{array} {lcl}
+$$\begin{array} {lcl}
     \text{borne droite} - \text{borne gauche} & = & 7 - 2 \\\ 
                                               & = & 5     \\\ 
                                               & = & 4 + 1 \\\ 
                                               & = & \boxed{2} \times 2  + 1
-\end{array} \\)
+\end{array}$$
 
 La différence des bornes de ce nœud est donc supérieure à 1 : il s'agit donc d'un nœud "complexe". On s'aperçoit
 également qu'il comporte 2 enfants, ce qui est vérifiable sur le schéma.

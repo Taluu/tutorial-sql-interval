@@ -129,11 +129,11 @@ $9 - 1 = 8$.
 Occupons-nous maintenant de provoquer un trou dans l'arbre d'accueil. Souvenez-vous du calcul du nombre d'enfants que
 nous avions abordé dans la partie théorique : 
 
-\\( \begin{array}{lcl}\text{borne droite} - \text{borne gauche} & = & 18 - 1 \\\ 
+$$ \begin{array}{lcl}\text{borne droite} - \text{borne gauche} & = & 18 - 1 \\\ 
                                                                 & = & 17 \\\ 
                                                                 & = & 16 + 1 \\\ 
                                                                 & = & \boxed{8} \times 2  + 1
-\end{array}\\)
+\end{array}$$
 
 Si on compte l'élément racine, ça nous fait donc : $8 + 1 = \bf{9}$ éléments) ; il faudra donc ajouter **18** aux
 bornes gauche et droite des éléments ayant une borne supérieure ou égale à 9. Vous pouvez maintenant faire le
