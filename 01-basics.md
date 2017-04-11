@@ -158,15 +158,15 @@ Ah, c'est vrai, j'avais oublié le petit indice : utilisez les bornes des nœuds
 grave, voici ma solution, et pour tenter de me faire pardonner, je l'ai commentée pour que vous la compreniez mieux.
 
 ```sql
-SELECT id, node_level
+SELECT id, node_depth
     FROM tuto_ri
     WHERE node_left < 13 
         AND node_right > 14
-    ORDER BY node_level DESC;
+    ORDER BY node_depth DESC;
 ```
 
 On cherche à récupérer l'ID, le nom, et la hiérarchisation des nœuds parents, ce qu'on fait en sélectionnant les champs
-`id`, `name`, et `node_level`. Ensuite, dans la clause `WHERE`, on applique un des points principaux de la
+`id`, `name`, et `node_depth`. Ensuite, dans la clause `WHERE`, on applique un des points principaux de la
 représentation intervallaire : la borne gauche d'un nœud est *toujours plus grande* que celle des nœuds parents. On
 sélectionne donc tous les nœuds ayant, dans notre cas, une borne gauche plus petite que 7. On applique la même chose à
 la borne droite, sauf que cette fois-ci, la borne droite de la feuille est *toujours plus petite* que celle des nœuds
@@ -174,7 +174,7 @@ parents.
 
 On a donc les nœuds que l'on désire... Mais ce n'est pas fini, il y avait un petit piège : on souhaite avoir les
 nœuds... Du plus proche au plus lointain par rapport à la feuille. Il suffisait juste d'ajouter une petite clause
-`ORDER BY`, en indiquant le nom de la colonne qui sert à trier (`node_level`), et par ordre **décroissant**. Je vous
+`ORDER BY`, en indiquant le nom de la colonne qui sert à trier (`node_depth`), et par ordre **décroissant**. Je vous
 avais bien dit que la notion de hiérarchisation pouvait s'avérer utile par moments... En voilà la preuve même !
 
 `id` | `node_depth`
@@ -190,7 +190,7 @@ SELECT id, node_depth
     FROM tuto_ri
     WHERE node_left <= 13 
         AND node_right >= 14
-    ORDER BY node_level DESC;
+    ORDER BY node_depth DESC;
 ```
 
 `id` | `node_depth`

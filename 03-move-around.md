@@ -61,7 +61,7 @@ Lorsqu'on sélectionne les données, on trouve la feuille insérée à la bonne 
 
 
 +------+--------------+-------------+--------------+
-| `id` | `node_level` | `node_left` | `node_right` |
+| `id` | `node_depth` | `node_left` | `node_right` |
 +------+--------------+-------------+--------------+
 | 1    | 0            | 1           | 20           |
 +------+--------------+-------------+--------------+
@@ -170,7 +170,7 @@ INSERT INTO tuto_ri (node_depth, node_left, node_right)
 ```
 
 +------+--------------+-------------+--------------+ 
-| `id` | `node_level` | `node_left` | `node_right` |
+| `id` | `node_depth` | `node_left` | `node_right` |
 +------+--------------+-------------+--------------+
 | 1    | 0            | 1           | 38           |
 +------+--------------+-------------+--------------+
