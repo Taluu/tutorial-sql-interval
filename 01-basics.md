@@ -1,5 +1,5 @@
-Une (petite) présentation du schmilblik
-=======================================
+Une (petite) présentation du schmilblick
+========================================
 Avant d'attaquer la bête, nous avons, tout d'abord, besoin de la définir. Tout d'abord, qu'est-ce que la repr...
 
 > C'est vrai ça, c'est quoi la rapré... représentation invert... cette chose ?
@@ -35,8 +35,8 @@ qui comprend donc des nœuds fils, soit il peut s'agir d'une feuille, qui, à l'
 
 Pour identifier mathématiquement les deux, il faut juste **calculer la différence entre la borne droite et la borne
 gauche**. Si le résultat est égal à 1, il s'agit d'une feuille, sinon d'un nœud. On peut même pousser le raisonnement
-un peu plus loin : cette différence nous donne le double nombre d'enfants de ce nœud auquel on lui rajoute un. Vérifions
-le pour une feuille (disons le nœud  ayant les bornes 3 et 4)  : 
+un peu plus loin : cette différence nous donne le double nombre d'enfants de ce nœud auquel on lui rajoute un. Vérifions-le
+pour une feuille (disons le nœud  ayant les bornes 3 et 4) : 
 
 $$ \begin{array} {lcl}
     \text{borne droite} - \text{borne gauche} & = & 4 - 3 \\\ 
@@ -58,18 +58,18 @@ $$\begin{array} {lcl}
 La différence des bornes de ce nœud est donc supérieure à 1 : il s'agit donc d'un nœud "complexe". On s'aperçoit
 également qu'il comporte 2 enfants, ce qui est vérifiable sur le schéma.
 
-Passons maintenant à la préparation pour pouvoir pratiquer, dans les deux parties suivantes de ce tutoriel. Je montrerai
+Passons maintenant à la préparation pour pouvoir pratiquer dans les deux parties suivantes de ce tutoriel. Je montrerai
 également pourquoi il est difficile (et coûteux) d'utiliser les "auto-jointures" -- soit l'utilisation avec abus de la
-clause `WHERE`, des sous-requêtes et des jointures -- pour accéder aux différents nœuds... Et qu'a moins d'avoir des
-idées tordues, devient vite impraticable.
+clause `WHERE`, des sous-requêtes et des jointures -- pour accéder aux différents nœuds... Et qu'à moins d'avoir des
+idées tordues, cela devient vite impraticable.
 
 **NB :** Dans cette sous-partie, je considère que vous avez un minimum de connaissances en SQL. Sinon, vous avez un bon
 tutoriel sur le SQL[^taguan-sql] par Taguan que je ne peux que vous recommander.
 
 [^taguan-sql]: [Administrez vos bases de données avec MySQL](http://fr.openclassrooms.com/informatique/cours/administrez-vos-bases-de-donnees-avec-mysql)
 
-La représentation intervallaire versus l'héritage récursif
-==========================================================
+La représentation intervallaire *versus* l'héritage récursif
+============================================================
 L'héritage récursif ? Quelle prise de tête...
 ---------------------------------------------
 Voici la table type que nous allons utiliser pour illustrer (la faiblesse de) l'héritage récursif :
@@ -111,7 +111,7 @@ ce qui était demandé : on voulait un nœud par ligne. Certes, les jointures, c
 vite pesant et peu pratique.
 
 **NB :** pour les curieux qui veulent absolument résoudre ce problème, une piste serait d'utiliser une procédure
-récursive pour trouver ce qu'on cherche, mais ça reste consommateur de ressource si l'arbre est trop profond (dans notre
+récursive pour trouver ce qu'on cherche, mais ça reste consommateur de ressources si l'arbre est trop profond (dans notre
 cas, cela peut être considéré comme trop profond). Mais ce sujet ne nous intéresse pas ici.
 
 La représentation intervallaire ? Yeah !
@@ -199,12 +199,13 @@ SELECT id, node_depth
 7    | 1
 1    | 0
 
+<!-- todo on zds : replace <del> by ~~ //-->
 Dans les deux parties qui suivent, nous allons voir les différentes techniques et opérations <del>chirurgicales</del>
 liées à la représentation intervallaire, telles que...
 
-- le comptage du nombre d'éléments dans un nœud (que ce soit le nombre d'enfants, de parents, d'éléments, ...) ;
+- le comptage du nombre d'éléments dans un nœud (que ce soit le nombre d'enfants, de parents, d'éléments...) ;
 - la modification du statut d'un élément, par l'ajout ou la suppression de nœuds ;
 - la possibilité de mettre à jour les indices aux bornes en fonction du nombre d'éléments
 
-Ces deux parties agiront donc par plusieurs séries de "minis-TP", qui demandent par moments de la réflexion, et par
+Ces deux parties agiront donc par plusieurs séries de "mini-TP", qui demandent par moments de la réflexion, et par
 moments des astuces... Bien évidemment, je vous guiderai pas à pas pour la réalisation de ces TP.

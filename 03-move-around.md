@@ -1,7 +1,7 @@
 Ici, on va voir comment mettre à jour un élément : mettre ses bornes à jour (ajout / suppression d'éléments),
 déplacement de nœuds... Bref, on va s'amuser à mettre à jour notre arbre.
 
-Dans cette partie du tutoriel, nous allons voir quelques concepts intéressants, nous montrons qu'en fait, notre arbre
+Dans cette partie du tutoriel, nous allons voir quelques concepts intéressants, nous montrerons qu'en fait notre arbre
 est loin d'être immuable : nous pouvons rajouter ou enlever des nœuds, et même les déplacer ! Nous verrons d'abord
 l'ajout et la suppression, actions nécessaires pour bien comprendre le déplacement ensuite, qui lui est assez complexe
 et peut être divisé en plusieurs sous-parties, que nous aborderons alors en temps et en heure.
@@ -17,7 +17,7 @@ tout de même assez intéressant pour comprendre le concept derrière la modific
 On va donc insérer une nouvelle feuille au nœud ayant l'id N°5. Même si dans ce cas très précis, on connaît déjà la
 borne gauche (`8`) et la borne droite (`9`) de cet élément, nous allons tout de même nous mettre dans un cas réel où ces
 deux bornes ne sont en général pas encore connues ; il nous faut alors les récupérer via une requête de type `SELECT`. 
-En général, seul la sélection de la borne droite et – si on suit l'architecture, qui, je le rappelle, est facultative –
+En général, seule la sélection de la borne droite et – si on suit l'architecture, qui, je le rappelle, est facultative –
 de la profondeur suffit.
 
 On aura également besoin de faire 2 requêtes `UPDATE` : changer les bornes droites puis les gauches de tous les éléments
@@ -38,7 +38,7 @@ SELECT node_right, node_depth
 
 /* 
  * Ainsi, on sait que node_right vaut 9 et que la profondeur est de 1 ; tous les
- * éléments ayant une borne gauche et une borne droite supérieurs à 9 seront mis
+ * éléments ayant une borne gauche et une borne droite supérieures à 9 seront mis
  * à jour par les deux requêtes qui suivent. 
  *
  * Notre feuille aura alors comme borne 9 et 9+1 = 10, et aura pour profondeur
@@ -80,10 +80,10 @@ Lorsqu'on sélectionne les données, on trouve la feuille insérée à la bonne 
 **NB :** Vous pouvez ainsi transformer une feuille en un nœud, tel qu'on vient ici de le faire.
 
 Je pense que vous devinerez comment supprimer une feuille : le topo est à peu près le même que pour l'insertion, sauf
-que cette fois-ci, on procède en sens inverse.
+que cette fois-ci on procède en sens inverse.
 
 ```sql
-/* Même si on connaît la borne gauche de l'élément à supprimer, mettons nous dans un cas où ce n'est justement pas le cas */
+/* Même si on connaît la borne gauche de l'élément à supprimer, mettons-nous dans un cas où ce n'est justement pas le cas */
 SELECT node_left
     FROM tuto_ri
     WHERE id = 21;
@@ -103,9 +103,9 @@ UPDATE tuto_ri
     WHERE node_right >= 9;
 ```
 
-**NB :** Pour la suppression, vous n'êtes pas obligés de tout re-décaler, mais suivez mon conseil, et faites-le,
-histoire d'avoir un arbre plus propre et ne pas avoir "trop" de trous. Ceux-ci peuvent devenir problématique par la
-suite, spécialement au niveau de l'organisation et des statisques sur vos nœuds (je pense par exemple au nombre
+**NB :** Pour la suppression, vous n'êtes pas obligés de tout redécaler, mais suivez mon conseil, et faites-le,
+histoire d'avoir un arbre plus propre et ne pas avoir "trop" de trous. Ceux-ci peuvent devenir problématiques par la
+suite, spécialement concernant l'organisation et des statisques sur vos nœuds (je pense par exemple au nombre
 d'enfants pour un nœud précis).
 
 Maintenant, si vous êtes toujours là, on va aborder la même chose... Mais dans le cas général !
@@ -113,14 +113,14 @@ Maintenant, si vous êtes toujours là, on va aborder la même chose... Mais dan
 Le cas général : l'insertion et la suppression d'un nœud dans un arbre
 ======================================================================
 Je ne pense pas avoir besoin de trop détailler. Vous avez juste besoin de connaître les bornes de l'arbre à insérer, le
-nombre d'éléments qu'il contient, et ça devrait faire l'affaire, si on emploie la même méthode que tout à l'heure. Voici
+nombre d'éléments qu'il contient, et ça devrait faire l'affaire si on emploie la même méthode que tout à l'heure. Voici
 l'arbre[^schema] que l'on va chercher à insérer :
 
 [^schema]: Réalisé par [Shadow_f](http://fr.openclassrooms.com/membres/shadowf-91614)
 
 ![](./03-tree-insert.jpg)
 
-On va donc rattacher cet arbre à la feuille ayant l'id n°5, ayant donc – en considérant notre arbre propre, sans la
+On va donc rattacher cet arbre à la feuille ayant l'id n°5, et donc – en considérant notre arbre propre, sans la
 feuille rajoutée lors de l'exercice précédent – les bornes 8 et 9. Avant de commencer, rendons l'arbre à insérer
 compatible avec le nœud d'accueil. Pour cela, il nous faut ajouter la borne droite du nœud d'accueil, auquel on
 retranche un (en effet, la borne gauche du premier élément de l'arbre à insérer commence à 1 et pas 0 !). Soit ici 
@@ -207,7 +207,7 @@ fois-ci récupérer les deux bornes du nœud racine à enlever :
 ```sql
 /* 
  * Même si on connaît la borne gauche et la borne droite de l'élément à
- * supprimer, mettons nous dans un cas où ce n'est justement pas le cas 
+ * supprimer, mettons-nous dans un cas où ce n'est justement pas le cas 
  */
 SELECT node_left, node_right
     FROM tuto_ri
@@ -242,7 +242,7 @@ C'était tout simplement un mélange entre l'application de la suppression d'une
 pour la suppression d'une feuille, les mises à niveau des bornes de l'arbre dans lequel on a supprimé notre nœud ne sont
 pas obligatoires, mais restent un plus non négligeable pour avoir un arbre propre, et évitera surtout de fausser les
 statistiques des nœuds. Comme pour l'insertion, pour connaître le nombre à soustraire aux deux bornes, il "suffisait" de
-connaître le nombre d'éléments à supprimer, et à le doubler.
+connaître le nombre d'éléments à supprimer et de le doubler.
 
 Maintenant qu'on a vu comment insérer et supprimer un nœud d'un arbre, nous allons voir un autre point très intéressant
 dans la manipulation des arbres : le déplacement de nœuds, qui est en fait une sorte de combinaison de ces deux derniers
@@ -253,7 +253,7 @@ Déplacement d'un nœud
 Comme je vous le disais, le déplacement d'un nœud se résume basiquement à deux actions : la "suppression" d'un nœud,
 et sa "réinsertion".
 
-Mais comme un bon exemple vaut mieux qu'un long discours, tachons par exemple de déplacer le nœud n°7, et mettons le 
+Mais comme un bon exemple vaut mieux qu'un long discours, tâchons par exemple de déplacer le nœud n°7, et mettons-le 
 à l'extrémité du nœud n°2. J'ai volontairement omis les bornes de ces deux nœuds, pour nous mettre dans un cas où nous
 ne les connaissons pas. Profitons-en pour également connaître le nombre d'enfants que nous déplaçons.
 
@@ -280,9 +280,9 @@ SELECT COUNT(*)
 | 3          |
 
 Je parlais de suppression, et maintenant qu'on a toutes les informations à notre disposition, on va donc pouvoir
-"supprimer" le nœud que nous souhaitons déplacer... Attention, notez bien les guillemets autour de l'emploi du mot
-supprimer ! En effet, nous n'allons pas le supprimer de la base de donnée, nous allons juste nous contenter de le cacher
-dans notre arbre. On appelle ça une **zone temporaire**.
+*supprimer* le nœud que nous souhaitons déplacer... Attention, notez bien l'italique sur l'emploi du mot supprimer !
+En effet, nous n'allons pas le supprimer de la base de donnée, nous allons juste nous contenter de le cacher dans notre
+arbre. On appelle ça une **zone temporaire**.
 
 Pour déplacer un arbre en zone temporaire, il existe deux façons ; soit on met les bornes de notre arbre en négatif,
 soit en un nombre faramineusement grand. Par préférence, je préfère nettement la première solution ; il est en effet
@@ -351,12 +351,12 @@ voir que les cas suivants existent :
 - Nous souhaitons insérer le nœud **après** le dernier enfant du nœud d'accueil (s'il en a)
 
 Nous avons déjà traité le troisième cas ; attardons-nous sur les deux premiers cas. En fait, ils ne sont pas si
-compliqués que ça ; il y a juste quelques paramètres qui changent. Autant la mise en "zone temporaire" et le rebouchage
-qui suit ne change pas, mais observons le moment où nous créons un trou et le moment où on insère effectivement notre
-nœud dans le nœud d'accueil.
+compliqués que ça ; il y a juste quelques paramètres qui changent. Même si la mise en "zone temporaire" et le rebouchage
+qui suit ne change pas, observons quand même le moment où nous créons un trou et le moment où on insère effectivement
+notre nœud dans le nœud d'accueil.
 
 Dans le premier cas (nous souhaitons alors insérer notre nœud **avant** ses frères), plutôt que de se baser sur la
-borne *droite* du parent, basons nous plutôt sur sa borne *gauche*. Nos requêtes deviennent donc les suivantes :
+borne *droite* du parent, basons-nous plutôt sur sa borne *gauche*. Nos requêtes deviennent donc les suivantes :
 
 ```sql
 UPDATE tuto_ri
@@ -377,9 +377,9 @@ UPDATE tuto_ri
 ```
 
 Pour le second cas (nous souhaitons alors insérer notre nœud **après** un de ses frères), plutôt que de se baser sur la
-borne droite du *parent*, nous alors nous focaliser sur la borne droite du *frère*. Mettons que nous souhaitons déplacer
-le nœud n°7 **après** le nœud n°3. Une sélection des bornes de ce nœud nous indique alors que ses bornes ont pour
-valeur le tuple (3, 4).
+borne droite du *parent*, nous allons alors nous focaliser sur la borne droite du *frère*. Mettons que nous souhaitons
+déplacer le nœud n°7 **après** le nœud n°3. Une sélection des bornes de ce nœud nous indique alors que ses bornes ont
+pour valeur le tuple (3, 4).
 
 ```sql
 UPDATE tuto_ri

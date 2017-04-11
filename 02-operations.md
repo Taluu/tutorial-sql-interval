@@ -1,14 +1,14 @@
-Dans cette première (courte) série de TP, et afin de se mettre en jambe pour la seconde série, nous allons voir comment
+Dans cette première (courte) série de TP, et afin de se mettre en jambes pour la seconde série, nous allons voir comment
 compter le nombre d'éléments d'un nœud, le nombre de feuilles d'un nœud, le nombre de nœuds "complexes" dans un même
 nœud, ... bref, on va compter.
 
 Compter le nombre d'éléments d'un nœud
 ======================================
 Pour compter le nombre d'éléments d'un nœud, ça va être relativement simple, et vite expédié. Vous vous souvenez, à la
-fin de la première partie, on a vu comment récupérer tous les parents (et leur caractéristiques) d'un nœud, en incluant
+fin de la première partie, on a vu comment récupérer tous les parents d'un nœud (et leur caractéristiques), en incluant
 ou non l'élément... Ici, ça va plus ou moins être le même topo.
 
-Ce qui change ici, c'est que vous aurez besoin, comme je l'ai dit, non pas de sélectionner les parents de l'élément,
+Ce qui change, c'est que vous aurez besoin, comme je l'ai dit, non pas de sélectionner les parents de l'élément,
 mais ses enfants ! Donc, au lieu de rechercher tous les éléments qui ont une borne gauche inférieure à celle de
 l'élément recherché, et une borne droite supérieure à celle de l'élément, on va faire l'inverse.
 
@@ -32,7 +32,7 @@ Compter le nombre de feuilles d'un nœud
 Pas tout à fait ; ici, on ne cherchera pas à compter toute la filiation d'un nœud, mais en prenant également en compte
 le type de nœud (le nombre de feuilles ou de nœuds donc) d'un nœud. 
 
-Donc, on va à peu près procéder de la même manière qu'auparavant, mais, tâchez juste de vous rappeler d'un des points à
+Donc, on va à peu près procéder de la même manière qu'auparavant, mais tâchez juste de vous rappeler l'un des points à
 retenir de la représentation intervallaire. Vous y êtes ? Non ? Vous savez ce qu'il vous reste à faire...
 
 ```sql
