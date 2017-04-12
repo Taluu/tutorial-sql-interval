@@ -140,7 +140,7 @@ Voici l'arbre[^schema] que l'on va chercher à insérer :
 
 [^schema]: Réalisé par [Shadow_f](http://fr.openclassrooms.com/membres/shadowf-91614)
 
-![](./03-tree-insert.jpg)
+![Arbre qu'on va chercher à insérer sur notre arbre de base](/media/galleries/287/d0ede80a-1e1a-43cc-a1e8-f8c93f4e7707.jpg.960x960_q85.jpg)
 
 On va donc rattacher cet arbre à la feuille ayant l'id n°5, et donc – en
 considérant notre arbre propre, sans la feuille rajoutée lors de l'exercice

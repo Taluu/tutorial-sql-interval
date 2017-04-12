@@ -28,7 +28,7 @@ notion :
 
 [^schema]: Réalisé par [Shadow_f](http://fr.openclassrooms.com/membres/shadowf-91614)
 
-![Concept de la RI](./01-tree.jpg)
+![Concept de la RI](/media/galleries/287/67f2cd29-0f28-4759-bf94-009d2e8a62db.jpg.960x960_q85.jpg)
 
 Comme vous pouvez le voir, chaque borne de chaque élément se voit attribuer un
 nombre. Ce nombre permet de déterminer la position de l'élément dans
@@ -228,10 +228,9 @@ SELECT id, node_depth
 7    | 1
 1    | 0
 
-<!-- todo on zds : replace <del> by ~~ //-->
 Dans les deux parties qui suivent, nous allons voir les différentes techniques
-et opérations <del>chirurgicales</del> liées à la représentation intervallaire,
-telles que...
+et opérations ~~chirurgicales~~ liées à la représentation intervallaire, telles
+que...
 
 - le comptage du nombre d'éléments dans un nœud (que ce soit le nombre
   d'enfants, de parents, d'éléments...) ;
