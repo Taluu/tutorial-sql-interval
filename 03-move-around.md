@@ -293,12 +293,11 @@ d'enfants que nous déplaçons.
 ```sql
 SELECT node_left, node_right
     FROM tuto_ri
-    WHERE id IN (2, 7);
+    WHERE id = 7;
 ```
 
  `id` | `node_left` | `node_right`
  ---- | ----------- | -------------
-    2 | 2           | 7
     7 | 12          | 17
 
 ```sql
@@ -349,7 +348,24 @@ UPDATE tuto_ri
 ```
 
 Maintenant que notre nœud est en zone temporaire, il nous faut dès à présent
-ouvrir un trou où nous le souhaitons, soit *à l'extrémité du nœud ayant pour
+ouvrir un trou où nous le souhaitons. Comme tout à l'heure, sélectionnons alors
+les bornes du nouveau parent d'accueil (le noeud n°2). Nous aurions pu les
+connaître lors de la sélection du noeud de départ, mais dans le cas d'un
+déplacement sur la droite, celles-ci vont changer une fois le *rebouchage du
+trou* effectué ! Ce n'est pas notre cas (nous nous déplaçons vers la gauche),
+mais il est bonne pratique de faire un cas général.
+
+```sql
+SELECT node_left, node_right
+    FROM tuto_ri
+    WHERE id = 7;
+```
+
+ `id` | `node_left` | `node_right`
+ ---- | ----------- | -------------
+    2 | 2           | 7
+
+Nous déplacerons donc notre noeud temporaire *à l'extrémité du nœud ayant pour
 bornes (2, 7)*. Il s'agit du cas que nous avons déjà vu dans la sous-partie
 précédente ; nous nous occuperons de voir l'autre cas par la suite.
 
@@ -423,7 +439,7 @@ UPDATE tuto_ri
 ```
 
 Pour le second cas (nous souhaitons alors insérer notre nœud **après** un de ses
-frères), plutôt que de se baser sur la borne droite du *parent*, nous allons 
+frères), plutôt que de se baser sur la borne droite du *parent*, nous allons
 alors nous focaliser sur la borne droite du *frère*. Mettons que nous
 souhaitons déplacer le nœud n°7 **après** le nœud n°3. Une sélection des bornes
 de ce nœud nous indique alors que ses bornes ont pour valeur le tuple (3, 4).
