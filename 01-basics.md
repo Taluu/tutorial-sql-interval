@@ -26,7 +26,7 @@ acytéli... bref, un certain médicament...), c'est la notion de **borne
 gauche**, **borne droite**. Voici un schéma[^schema] pour illustrer cette
 notion :
 
-[^schema]: Réalisé par [Shadow_f](http://fr.openclassrooms.com/membres/shadowf-91614)
+[^schema]: Réalisé par [Alex-D](https://zestedesavoir.com/membres/voir/Alex-D/)
 
 ![Concept de la RI](./01-tree.jpg)
 

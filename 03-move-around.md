@@ -138,7 +138,7 @@ connaître les bornes de l'arbre à insérer, le nombre d'éléments qu'il conti
 et ça devrait faire l'affaire si on emploie la même méthode que tout à l'heure.
 Voici l'arbre[^schema] que l'on va chercher à insérer :
 
-[^schema]: Réalisé par [Shadow_f](http://fr.openclassrooms.com/membres/shadowf-91614)
+[^schema]: Réalisé par [Alex-D](https://zestedesavoir.com/membres/voir/Alex-D/)
 
 ![](./03-tree-insert.jpg)
 
